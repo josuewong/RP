@@ -1,0 +1,152 @@
+ private $idMedico;
+     private $PNombre;
+     private $SNombre;
+     private $PApellido;
+     private $SApellido;
+     private $Genero;
+     private $FNacimineto;
+     private $Direccion;
+     private $Telefono;
+     private $NombreEspecialidad;
+    // private $con;
+
+     public function __construct($Pnombre,$Snombre,$Papellido,$Sapellido,$genero,$nacimineto,$direccion,$cel,$especialidad)
+     {
+          $this-> PNombre=$Pnombre;
+          $this-> SNombre=$Snombre;
+          $this-> PApellido=$Papellido;
+          $this-> SApellido=$Sapellido;
+          $this-> Genero=$genero;
+          $this-> FNacimineto=$nacimineto;
+          $this-> Direccion=$direccion;
+          $this-> Telefono=$cel;
+          $this-> NombreEspecialidad=$especialidad;
+          //$this-> con=new Conection();
+     }
+     /*
+          public function getIdMedico()
+          {
+          return $this->idMedico;
+          }
+
+          public function setIdMedico($idMedico)
+          {
+          return $this->idMedico = $idMedico;
+          }
+
+          public function getPNombre()
+          {
+          return $this->PNombre;
+          }
+
+          public function setPNombre($Pnombre)
+          {
+          return $this->PNombre = $Pnombre;
+
+          }
+
+          public function getSNombre()
+          {
+          return $this->SNombre;
+          }
+
+          public function setSNombre($Snombre)
+          {
+          return $this->SNombre = $Snombre;
+
+          }
+
+
+          public function getPApellido()
+          {
+          return $this->PApellido;
+          }
+
+          public function setPApellido($Papellido)
+          {
+          return $this->PApellido = $Papellido;
+          }
+
+          public function getSApellido()
+          {
+          return $this->SApellido;
+          }
+
+          public function setSApellido($Sapellido)
+          {
+          return $this->SApellido = $Sapellido;
+
+          }
+
+          public function getGenero()
+          {
+          return $this->Genero;
+          }
+
+          public function setGenero($genero)
+          {
+          return $this->Genero = $genero;
+          }
+
+          public function getFNacimineto()
+          {
+          return $this->FNacimineto;
+          }
+
+          public function setFNacimineto($nacimineto)
+          {
+          return $this->FNacimineto = $nacimineto;
+
+          }
+
+          public function getDireccion()
+          {
+          return $this->Direccion;
+          }
+
+          public function setDireccion($direccion)
+          {
+          return $this->Direccion = $direccion;
+
+          }
+
+          public function getTelefono()
+          {
+          return $this->Telefono;
+          }
+
+          public function setTelefono($cel)
+          {
+          return $this->Telefono = $cel;
+
+          }
+
+          public function getNombreEspecialidad()
+          {
+               return $this->NombreEspecialidad;
+          }
+
+          public function setNombreEspecialidad($NombreEspecialidad)
+          {
+          return $this->NombreEspecialidad = $NombreEspecialidad;
+          } 
+     */
+
+          public function agregarmedico($idMedico,$PNombre,$SNombre,$PApellido,$SApellido,$Genero,$FNacimineto,$Direccion,$Telefono,$NombreEspecialidad){
+               //Añadir un Médico de la base de datos
+            }
+
+          public function actualizarmedico($idMedico,$PNombre,$SNombre,$PApellido,$SApellido,$Genero,$FNacimineto,$Direccion,$Telefono,$NombreEspecialidad){
+               //Editar información del médico de la base de datos
+          }
+
+          public function vermedicos($fil){
+                  //Ver la información del médico de la base de datos
+                  $users=$this->con->getCon()->query("SELECT * FROM medico where idMedico like '$fil%';");
+                    return $users;
+          }
+
+          //en la base de datos no indicamos eliminar un médico si retomamos esa función dejamos el codigo
+          public function eliminarmedico($idMedico){
+          //Eliminar médico de la base de datos
+          }

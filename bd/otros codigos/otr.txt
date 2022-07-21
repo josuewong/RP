@@ -1,0 +1,190 @@
+$conecta=new Conection();
+
+    
+
+
+$resultado=$conecta->getCon()->query("SELECT * FROM mydb.inicio_sesión;");
+
+    while ($usuarioo=$resultado->fetch_assoc()) {
+        echo "<br>";
+        echo $usuarioo['Correo'];
+        echo "<br>";
+        echo $usuarioo['Contraseña'];
+        echo "<br>";
+    }
+    
+   
+    echo "Cantidad de filas afectadas".$resultado->num_rows;
+    echo "<br>";
+
+
+
+
+
+
+
+
+
+
+require_once("app/Paciente.php");
+          $filter="";
+          if (isset($_GET['userfilter'])) {
+            $filter=$_GET['userfilter'];
+          }
+
+          $usuario= new Paciente();
+          $resultado=$usuario->buscarpaciente($filter);
+
+
+
+<?php while ($est=$resultado->fetch_assoc()) {
+             ?>
+                <tr>
+                <th scope="row">1</th>
+                <td><?php echo $est['idPaciente']?></td>
+                <td><?php echo $est['PNombre']?></td>
+                <td><?php echo $est['SNombre']?></td>
+                <td><?php echo $est['PApellido']?></td>
+                <td><?php echo $est['SApellido']?></td>
+                <td><?php echo $est['Genero']?></td>
+                <td><?php echo $est['FNacimiento']?></td>
+                <td><?php echo $est['Direccion']?></td>
+                <td><?php echo $est['Telefono']?></td>
+                <td><?php echo $est['Religion']?></td>
+              </tr>
+
+
+              <?php
+              }
+              ?>
+
+
+
+
+PACIENTES.........................
+
+$cont=new Paciente();
+$resultado=$cont->buscarpaciente('');
+echo "Hola";
+var_dump( $resultado->fetch_assoc());
+
+while ($rest=$resultado->fetch_assoc()) {
+    echo $rest['PNombre'];
+   }
+
+
+......................................
+
+
+
+
+
+
+public function getIdPaciente()
+     {
+          return $this->idPaciente;
+     }
+
+     public function setIdPaciente($idPaciente)
+     {
+          return $this->idPaciente = $idPaciente;
+
+     }
+
+     public function getPNombre()
+     {
+          return $this->PNombre;
+     }
+
+     public function setPNombre($PNombre)
+     {
+          return $this->PNombre = $PNombre;
+
+     }
+
+     public function getSNombre()
+     {
+          return $this->SNombre;
+     }
+
+     public function setSNombre($Snombre)
+     {
+          return $this->SNombre = $Snombre;
+
+     }
+
+
+     public function getPApellido()
+     {
+          return $this->PApellido;
+     }
+
+     public function setPApellido($Papellido)
+     {
+          return $this->PApellido = $Papellido;
+     }
+
+     public function getSApellido()
+     {
+          return $this->SApellido;
+     }
+
+     public function setSApellido($Sapellido)
+     {
+          return $this->SApellido = $Sapellido;
+
+     }
+
+     public function getGenero()
+     {
+          return $this->Genero;
+     }
+
+     public function setGenero($genero)
+     {
+          return $this->Genero = $genero;
+     }
+
+
+     public function getFNacimineto()
+     {
+          return $this->FNacimineto;
+     }
+
+     public function setFNacimineto($nacimineto)
+     {
+          return $this->FNacimineto = $nacimineto;
+
+     }
+
+     public function getDireccion()
+     {
+          return $this->Direccion;
+     }
+
+     public function setDireccion($direccion)
+     {
+          return $this->Direccion = $direccion;
+
+     }
+
+     public function getTelefono()
+     {
+          return $this->Telefono;
+     }
+
+     public function setTelefono($cel)
+     {
+          return $this->Telefono = $cel;
+
+     }
+
+     public function getReligion()
+     {
+          return $this->Religion;
+     }
+
+     public function setReligion($religion)
+     {
+          return $this->Religion = $religion;
+     }

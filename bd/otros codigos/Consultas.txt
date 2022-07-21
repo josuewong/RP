@@ -1,0 +1,186 @@
+create view login as
+select p.idPaciente, i.Correo, concat(p.PNombre, ' ', p.PApellido) as Nombres, i.Contraseña, i.TipoUsuario 
+from paciente p inner join inicio_sesión i on p.idPaciente=i.Paciente_idPaciente;
+...............................................................................................................
+create view login2 as
+select p.idMedico, i.Correo, concat(p.PNombre, ' ', p.PApellido) as Nombres, i.Contraseña, i.TipoUsuario 
+from Medico p inner join inicio_sesion2 i on p.idMedico=i.idInicio_sesion2;
+
+
+.........................................................
+Perfilpaciente
+
+create view PerfilPaciente as
+SELECT * FROM paciente p inner join inicio_sesión i on p.idPaciente=i.Paciente_idPaciente;
+
+....................................................................
+create view ListaConsulta as
+SELECT concat(p.PNombre," ", p.PApellido) as nombre, c.ClasificacionConsulta, c.DescripcionConsulta, c.Fecha, c.Hora 
+FROM consulta c inner join paciente p on p.idPaciente=c.Paciente_idPaciente;
+
+
+SELECT * FROM consulta where Paciente_idPaciente like '2';
+
+.............................
+
+DELIMITER $$
+create procedure AgregarUsurio(
+IN PNombreIN varchar(45),
+IN SNombreIN varchar(45),
+IN PApellidoIN varchar(45),
+IN SApellidoIN varchar(45),
+IN GeneroIN varchar(45),
+IN CorreoIN varchar(45),
+IN ContraseñaIN varchar(45),
+IN FNacimientoIN DATE,
+IN DireccionIN varchar(45),
+IN TelefonoIN int,
+IN ReligionIN varchar(45)
+)
+BEGIN
+
+insert into paciente(PNombre,SNombre,PApellido,SApellido,Genero,FNacimiento,Direccion,Telefono,Religion)
+Values (PNombreIN,SNombreIN,PApellidoIN,SApellidoIN,GeneroIN,FNacimientoIN,DireccionIN,TelefonoIN,ReligionIN);
+
+insert into inicio_sesión(Correo,Contraseña,TipoUsuario,Paciente_idPaciente,Medico_idMedico)
+values (CorreoIN,ContraseñaIN,0,last_insert_id(),1);
+END
+$$
+
+call AgregarUsurio('Rosa','Lily','Morales','Méndez','Mujer','rosa123','1234','1998-11-13','xxxxxxxxx',87545870,'xxxxx');
+
+..............................................................................
+
+DELIMITER $$
+create procedure AgregarMedico(
+IN PNombreIN varchar(45),
+IN SNombreIN varchar(45),
+IN PApellidoIN varchar(45),
+IN SApellidoIN varchar(45),
+IN GeneroIN varchar(45),
+IN CorreoIN varchar(45),
+IN ContraseñaIN varchar(45),
+IN FNacimientoIN DATE,
+IN DireccionIN varchar(45),
+IN TelefonoIN int,
+IN NombreEspecialidadIN varchar(45)
+)
+BEGIN
+
+insert into medico(PNombre,SNombre,PApellido,SApellido,Genero,FNacimiento,Direccion,Telefono,NombreEspecialidad)
+Values (PNombreIN,SNombreIN,PApellidoIN,SApellidoIN,GeneroIN,FNacimientoIN,DireccionIN,TelefonoIN,NombreEspecialidadIN);
+
+insert into inicio_sesión(Correo,Contraseña,TipoUsuario,Paciente_idPaciente,Medico_idMedico)
+values (CorreoIN,ContraseñaIN,2,1,last_insert_id());
+END
+$$
+...................................................................
+DELIMITER $$
+create procedure AgregarConsulta(
+IN ClasificacionIN varchar(45),
+IN DescripcionIN varchar(45),
+IN FechaIN varchar(45),
+IN HoraIN varchar(45),
+IN IdDestinoIN varchar(45)
+)
+BEGIN
+
+insert into consulta(ClasificacionConsulta,DescripcionConsulta,Fecha,Hora,Paciente_idPaciente,Medico_idMedico)
+Values (ClasificacionIN,DescripcionIN,FechaIN,HoraIN,IdDestinoIN,1);
+END
+$$
+..........................................................................
+delimiter $$
+create procedure ActualizarPaciente(
+IN PNombreIN varchar(45),
+IN SNombreIN varchar(45), 
+IN PApellidoIN varchar(45), 
+IN SApellidoIN varchar(45), 
+IN GeneroIN varchar(45), 
+IN FNacimientoIN date, 
+IN DireccionIN varchar(45), 
+IN TelefonoIN int, 
+IN ReligionIN varchar(45),
+IN CorreoIN varchar(45), 
+IN ContraseñaIN varchar(255), 
+IN TipoUsuarioIN int,
+IN idPacienteIN int
+)
+begin
+UPDATE paciente SET 
+PNombre = PNombre, 
+SNombre = SNombreIN, 
+PApellido = PApellidoIN, 
+SApellido = SApellidoIN, 
+Genero = GeneroIN, 
+FNacimiento = FNacimientoIN, 
+Direccion = DireccionIN, 
+Telefono = TelefonoIN, 
+Religion = ReligionIN 
+WHERE (`idPaciente` = idPacienteIN);
+
+
+UPDATE inicio_sesión SET 
+Correo = CorreoIN, 
+Contraseña = ContraseñaIN, 
+TipoUsuario = TipoUsuarioIN 
+WHERE (Paciente_idPaciente = idPacienteIN);
+end
+$$
+...................................................................................
+
+delimiter $$
+create procedure ActualizarMedico(
+IN PNombreIN varchar(45),
+IN SNombreIN varchar(45), 
+IN PApellidoIN varchar(45), 
+IN SApellidoIN varchar(45), 
+IN GeneroIN varchar(45), 
+IN FNacimientoIN date, 
+IN DireccionIN varchar(45), 
+IN TelefonoIN int, 
+IN EspecialidadIN varchar(45),
+IN CorreoIN varchar(45), 
+IN ContraseñaIN varchar(255), 
+IN TipoUsuarioIN int,
+IN idMedicoIN int
+)
+begin
+UPDATE Medico SET 
+PNombre = PNombreIN, 
+SNombre = SNombreIN, 
+PApellido = PApellidoIN, 
+SApellido = SApellidoIN, 
+Genero = GeneroIN, 
+FNacimiento = FNacimientoIN, 
+Direccion = DireccionIN, 
+Telefono = TelefonoIN, 
+NombreEspecialidad = EspecialidadIN
+WHERE (`idMedico` = idMedicoIN);
+
+
+UPDATE inicio_sesion2 SET 
+Correo = CorreoIN, 
+Contraseña = ContraseñaIN, 
+TipoUsuario = TipoUsuarioIN,
+Medico_idMedico = Medico_idMedicoIN
+WHERE (Medico_idMedico = idMedicoIN);
+end
+$$
+................................................
+delimiter $$
+create procedure ActualizarReceta(
+IN TratamientoIN varchar(500),
+IN CostoIN int, 
+IN Medico_idMedicoIN int,
+IN idRecetaIN int
+)
+begin
+UPDATE receta SET 
+Tratamiento = TratamientoIN, 
+Costo = CostoIN, 
+Medico_idMedico = Medico_idMedicoIN
+WHERE (`idReceta` = idRecetaIN);
+end
+$$
+...........................................................
